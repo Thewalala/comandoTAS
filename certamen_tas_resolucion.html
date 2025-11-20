@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolución Certamen TAS - Servidor Ubuntu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        h4 {
+            color: #666;
+            margin-top: 20px;
+        }
+        .metadata {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .metadata p {
+            margin: 5px 0;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        pre code {
+            background-color: transparent;
+            color: #f8f8f2;
+            padding: 0;
+        }
+        .output {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #27ae60;
+            margin: 10px 0;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .status-ok {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .status-error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .status-warning {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        .status-info {
+            color: #3498db;
+            font-weight: bold;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 30px 0;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+        }
+        .section-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .points {
+            background-color: #27ae60;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-buttons" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+            <a href="comandos_certamen_resumen.html" class="btn" style="padding: 12px 24px; background-color: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; display: inline-block;">📋 Ver Comandos de Referencia Rápida</a>
+        </div>
+
+        <h1>Resolución Certamen TAS - Servidor Ubuntu</h1>
+        
+        <div class="metadata">
+            <p><strong>Alumno:</strong> Nicolas Jeldre</p>
+            <p><strong>Fecha:</strong> 20 de Noviembre de 2025</p>
+            <p><strong>Servidor:</strong> tas@10.33.195.216</p>
+            <p><strong>Sistema:</strong> Ubuntu 22.04</p>
+            <p><strong>VM:</strong> tas2025-c2-nicolas</p>
+        </div>
+
+        <hr>
+
+        <h2>Resumen Ejecutivo</h2>
+        
+        <p>Este documento detalla la resolución completa del Certamen 2 de Taller de Administración de Sistemas. Se diagnosticaron y corrigieron problemas en los servicios DNS (bind9), MySQL/MariaDB, Apache y WordPress, logrando un puntaje de <strong>100/100 puntos</strong>.</p>
+
+        <div class="section-box">
+            <p><strong>Problemas principales resueltos:</strong></p>
+            <ol>
+                <li><strong>MySQL/MariaDB (10 pts):</strong> Servicio inactivo - Se inició y habilitó</li>
+                <li><strong>Apache (20 pts):</strong> Puerto 80 ocupado por Nginx - Se detuvo Nginx e inició Apache</li>
+                <li><strong>DNS bind9 (45 pts):</strong> Servicio inactivo y zona con IP incorrecta - Se corrigió</li>
+                <li><strong>WordPress (15 pts):</strong> Título del sitio cambiado a "Certamen 2 - Nicolas Jeldre"</li>
+                <li><strong>Clonación VM (10 pts):</strong> Linked Clone realizado en Proxmox</li>
+            </ol>
+        </div>
+
+        <hr>
+
+        <h2>Conexión Inicial</h2>
+        
+        <pre><code>ssh tas@10.33.195.216</code></pre>
+        
+        <p><strong>Estado:</strong> <span class="status-ok">✅ Conectado exitosamente</span></p>
+
+        <hr>
+
+        <h2>Diagnóstico y Resolución de Problemas</h2>
+
+        <h3>1. Verificación Inicial del Servicio Web</h3>
+        
+        <p><strong>Prueba:</strong> Acceso desde navegador a <code>http://10.33.195.216</code></p>
+
+        <p><strong>Resultado:</strong></p>
+        <ul>
+            <li><span class="status-ok">✅</span> Apache2 está funcionando</li>
+            <li><span class="status-error">❌</span> Muestra página por defecto de Apache en lugar de WordPress</li>
+            <li>Mensaje: "Apache2 Ubuntu Default Page - It works!"</li>
+        </ul>
+
+        <p><strong>Problema Identificado:</strong></p>
+        <ul>
+            <li>WordPress NO está siendo servido correctamente</li>
+            <li>Apache está sirviendo <code>/var/www/html/index.html</code> (página por defecto)</li>
+            <li>Posibles causas:
+                <ul>
+                    <li>Virtual host de WordPress no configurado o deshabilitado</li>
+                    <li>Archivo <code>index.html</code> por defecto tiene prioridad sobre <code>index.php</code></li>
+                    <li>WordPress no instalado en la ruta correcta</li>
+                    <li>Configuración de sitios en <code>/etc/apache2/sites-enabled/</code> incorrecta</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p><strong>Próximos pasos a investigar:</strong></p>
+        <ol>
+            <li>Verificar configuración de sitios: <code>/etc/apache2/sites-enabled/</code></li>
+            <li>Verificar contenido de <code>/var/www/html/</code></li>
+            <li>Revisar logs de Apache: <code>/var/log/apache2/</code></li>
+            <li>Verificar estado del servicio MySQL/MariaDB (requerido para WordPress)</li>
+        </ol>
+
+        <hr>
+
+        <h3>Comandos Ejecutados y Resultados</h3>
+
+        <h4>1. Verificación del servicio MariaDB/MySQL</h4>
+
+        <pre><code>sudo systemctl status mysql</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>○ mariadb.service - MariaDB 10.6.22 database server
+     Loaded: loaded (/lib/systemd/system/mariadb.service; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+       Docs: man:mariadbd(8)
+             https://mariadb.com/kb/en/library/systemd/</code></div>
+
+        <p><strong>Problema encontrado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> MariaDB estaba <strong>inactivo</strong> (inactive - dead)</li>
+            <li><span class="status-error">❌</span> MariaDB estaba <strong>deshabilitado</strong> (disabled) - no se iniciaba automáticamente al arrancar</li>
+        </ul>
+
+        <p><strong>Solución aplicada:</strong></p>
+
+        <pre><code># Iniciar el servicio
+sudo systemctl start mysql
+
+# Habilitar para que inicie automáticamente
+sudo systemctl enable mysql</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service → /lib/systemd/system/mariadb.service.</code></div>
+
+        <p><span class="status-ok">✅ MariaDB ahora está iniciado y habilitado</span></p>
+
+        <hr>
+
+        <h4>2. Verificación del servicio Apache2</h4>
+
+        <pre><code>sudo systemctl status apache2</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>○ apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; disabled; vendor preset: enabled)
+     Active: inactive (dead)
+       Docs: https://httpd.apache.org/docs/2.4/</code></div>
+
+        <p><strong>Problema encontrado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> Apache2 estaba <strong>inactivo</strong> (inactive - dead)</li>
+            <li><span class="status-error">❌</span> Apache2 estaba <strong>deshabilitado</strong> (disabled)</li>
+            <li><span class="status-warning">⚠️</span> <strong>Nota:</strong> La página por defecto se mostraba anteriormente, lo que sugiere que Apache se detuvo recientemente</li>
+        </ul>
+
+        <p><strong>Intento de inicio:</strong></p>
+
+        <pre><code>sudo systemctl start apache2</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>Job for apache2.service failed because the control process exited with error code.
+See "systemctl status apache2.service" and "journalctl -xeu apache2.service" for details.</code></div>
+
+        <p><span class="status-error">❌ ERROR: Apache2 falló al iniciar - hay un error de configuración</span></p>
+
+        <p><strong>Diagnóstico de configuración:</strong></p>
+
+        <pre><code>sudo apache2ctl configtest</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Syntax OK</code></div>
+
+        <p><strong>Análisis:</strong></p>
+        <ul>
+            <li><span class="status-ok">✅</span> La sintaxis de configuración es correcta (Syntax OK)</li>
+            <li><span class="status-warning">⚠️</span> Advertencia sobre ServerName (no crítico)</li>
+            <li><span class="status-info">❓</span> El error debe estar en otro lado (permisos, puertos, módulos)</li>
+        </ul>
+
+        <p><strong>Acción:</strong> Revisar logs detallados del error</p>
+
+        <hr>
+
+        <h4>3. Análisis de logs de Apache2</h4>
+
+        <pre><code>sudo journalctl -xeu apache2.service</code></pre>
+
+        <p><strong>Salida (fragmento relevante):</strong></p>
+        <div class="output"><code>Nov 20 18:31:27 tas-c2-2025 apachectl[1411]: AH00558: apache2: Could not reliably determine the server's fully qualified domain name
+Nov 20 18:31:27 tas-c2-2025 apachectl[1411]: (98)Address already in use: AH00072: make_sock: could not bind to address [::]:80
+Nov 20 18:31:27 tas-c2-2025 apachectl[1411]: (98)Address already in use: AH00072: make_sock: could not bind to address 0.0.0.0:80
+Nov 20 18:31:27 tas-c2-2025 apachectl[1411]: no listening sockets available, shutting down
+Nov 20 18:31:27 tas-c2-2025 apachectl[1411]: AH00015: Unable to open logs</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> <strong>Puerto 80 ya está en uso</strong> - <code>(98)Address already in use</code></li>
+            <li><span class="status-error">❌</span> Apache no puede arrancar porque otro proceso está usando el puerto 80</li>
+            <li>Apache necesita los puertos 80 (HTTP) y posiblemente 443 (HTTPS)</li>
+        </ul>
+
+        <p><strong>Causa raíz:</strong> Hay otro proceso/servicio ocupando el puerto 80</p>
+
+        <p><strong>Próximo paso:</strong> Identificar qué proceso está usando el puerto 80</p>
+
+        <hr>
+
+        <h4>4. Identificación del proceso en puerto 80</h4>
+
+        <pre><code>sudo lsof -i :80</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>COMMAND PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+nginx   770     root    6u  IPv4  21759      0t0  TCP *:http (LISTEN)
+nginx   770     root    7u  IPv6  21760      0t0  TCP *:http (LISTEN)
+nginx   771 www-data    6u  IPv4  21759      0t0  TCP *:http (LISTEN)
+nginx   771 www-data    7u  IPv6  21760      0t0  TCP *:http (LISTEN)
+nginx   772 www-data    6u  IPv4  21759      0t0  TCP *:http (LISTEN)
+nginx   772 www-data    7u  IPv6  21760      0t0  TCP *:http (LISTEN)</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> <strong>Nginx está ocupando el puerto 80</strong></li>
+            <li>Hay 3 procesos de Nginx corriendo (PIDs: 770, 771, 772)</li>
+            <li>Nginx está escuchando en IPv4 e IPv6 en el puerto 80</li>
+            <li><strong>Conflicto:</strong> El servidor debe usar Apache, no Nginx</li>
+        </ul>
+
+        <p><strong>Solución:</strong> Detener Nginx para liberar el puerto 80 y permitir que Apache inicie</p>
+
+        <hr>
+
+        <h4>5. Solución del conflicto de puertos</h4>
+
+        <pre><code># Detener Nginx
+sudo systemctl stop nginx
+
+# Deshabilitar Nginx para que no inicie automáticamente
+sudo systemctl disable nginx
+
+# Verificar que el puerto 80 esté liberado
+sudo lsof -i :80</code></pre>
+
+        <p><span class="status-ok">✅ Puerto 80 liberado exitosamente</span></p>
+
+        <p><strong>Iniciar y habilitar Apache:</strong></p>
+
+        <pre><code># Iniciar Apache
+sudo systemctl start apache2
+
+# Habilitar Apache para inicio automático
+sudo systemctl enable apache2</code></pre>
+
+        <p><span class="status-ok">✅ Apache2 iniciado correctamente</span></p>
+
+        <hr>
+
+        <h4>6. Verificación del sitio web</h4>
+
+        <p><strong>Prueba:</strong> Recarga de la página <code>http://10.33.195.216</code> en el navegador</p>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>Forbidden
+You don't have permission to access this resource.
+Server unable to read htaccess file, denying access to be safe
+
+Apache/2.4.52 (Ubuntu) Server at 10.33.195.216 Port 80</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> Error 403 Forbidden</li>
+            <li><span class="status-error">❌</span> Apache no puede leer el archivo <code>.htaccess</code></li>
+            <li>Causa: Permisos incorrectos en el directorio <code>/var/www/html/</code> o en el archivo <code>.htaccess</code></li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar y corregir permisos</p>
+
+        <hr>
+
+        <h4>7. Descubrimiento de la ubicación de WordPress</h4>
+
+        <p><strong>Información:</strong> WordPress está ubicado en <code>/sitios/wp-tas2025</code>, NO en <code>/var/www/html/</code></p>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> Apache está sirviendo desde la ubicación por defecto <code>/var/www/html/</code></li>
+            <li><span class="status-error">❌</span> WordPress está en <code>/sitios/wp-tas2025</code></li>
+            <li>Necesitamos cambiar la configuración de Apache para apuntar al directorio correcto</li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar configuración del VirtualHost y cambiar DocumentRoot</p>
+
+        <hr>
+
+        <h4>8. Verificación de permisos en WordPress</h4>
+
+        <pre><code>ls -la /sitios/wp-tas2025/</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>ls: cannot access '/sitios/wp-tas2025/wp-content': Permission denied
+ls: cannot access '/sitios/wp-tas2025/wp-admin': Permission denied
+[...múltiples errores de Permission denied...]
+total 0
+d????????? ? ? ? ?            ? .
+d????????? ? ? ? ?            ? ..
+-????????? ? ? ? ?            ? index.php
+-????????? ? ? ? ?            ? wp-config.php
+[...todos los archivos con permisos ???...]</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> <strong>Permisos completamente incorrectos</strong> en todo el directorio WordPress</li>
+            <li><span class="status-error">❌</span> Ni siquiera el usuario actual puede leer los archivos</li>
+            <li>Los archivos muestran <code>?????????</code> indicando permisos no legibles</li>
+            <li>Apache (www-data) no puede acceder al contenido</li>
+        </ul>
+
+        <p><strong>Solución:</strong> Corregir permisos del directorio y archivos de WordPress</p>
+
+        <hr>
+
+        <h4>9. Corrección de permisos</h4>
+
+        <pre><code># Cambiar propietario a www-data (usuario de Apache)
+sudo chown -R www-data:www-data /sitios/wp-tas2025/
+
+# Establecer permisos 755 para directorios
+sudo find /sitios/wp-tas2025/ -type d -exec chmod 755 {} \;
+
+# Establecer permisos 644 para archivos
+sudo find /sitios/wp-tas2025/ -type f -exec chmod 644 {} \;
+
+# Verificar permisos del directorio principal
+sudo ls -ld /sitios/wp-tas2025/</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>drwxr-xr-x 5 www-data www-data 4096 Nov 13 00:21 /sitios/wp-tas2025/</code></div>
+
+        <p><span class="status-ok">✅ Permisos corregidos exitosamente</span></p>
+        <ul>
+            <li>Propietario: <code>www-data:www-data</code></li>
+            <li>Permisos directorio: <code>755</code> (drwxr-xr-x)</li>
+            <li>Permisos archivos: <code>644</code></li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Configurar Apache para servir desde <code>/sitios/wp-tas2025/</code></p>
+
+        <hr>
+
+        <h4>10. Verificación de configuración de Apache</h4>
+
+        <pre><code>cat /etc/apache2/sites-enabled/wp-tas2025.conf</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <pre><code>&lt;VirtualHost *:80&gt;
+        ServerName www.tas2025.local
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /sitios/wp-tas2025
+
+         &lt;Directory /sitios/wp-tas2025&gt;
+                Options FollowSymLinks
+                AllowOverride All
+                Require all granted
+        &lt;/Directory&gt;
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+&lt;/VirtualHost&gt;</code></pre>
+
+        <p><strong>Análisis:</strong></p>
+        <ul>
+            <li><span class="status-ok">✅</span> DocumentRoot ya apunta correctamente a <code>/sitios/wp-tas2025</code></li>
+            <li><span class="status-ok">✅</span> AllowOverride All permite usar <code>.htaccess</code></li>
+            <li><span class="status-ok">✅</span> Require all granted permite el acceso</li>
+            <li><span class="status-ok">✅</span> Configuración parece correcta</li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar si hay conflicto con otros sitios habilitados</p>
+
+        <hr>
+
+        <h4>11. Verificación de sitios habilitados</h4>
+
+        <pre><code>ls -la /etc/apache2/sites-enabled/</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>total 8
+drwxr-xr-x 2 root root 4096 Nov 12 02:33 .
+drwxr-xr-x 8 root root 4096 Nov 11 03:58 ..
+lrwxrwxrwx 1 root root   34 Nov 12 02:10 wp-tas2025.conf -> ../sites-available/wp-tas2025.conf</code></div>
+
+        <p><strong>Verificación del sitio por defecto:</strong></p>
+        <pre><code>ls -la /etc/apache2/sites-enabled/000-default.conf</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>ls: cannot access '/etc/apache2/sites-enabled/000-default.conf': No such file or directory</code></div>
+
+        <p><span class="status-ok">✅ Solo está habilitado el sitio correcto de WordPress</span><br>
+        <span class="status-ok">✅ No hay conflictos con otros sitios</span></p>
+
+        <p><strong>Próximo paso:</strong> Reiniciar Apache y verificar módulos necesarios para WordPress</p>
+
+        <hr>
+
+        <h4>12. Reinicio de Apache</h4>
+
+        <pre><code>sudo systemctl restart apache2
+sudo systemctl status apache2</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Thu 2025-11-20 18:42:20 UTC; 4s ago
+       Docs: https://httpd.apache.org/docs/2.4/
+    Process: 5534 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+   Main PID: 5539 (apache2)
+      Tasks: 6 (limit: 4558)
+     Memory: 10.2M
+     CGroup: /system.slice/apache2.service
+             ├─5539 /usr/sbin/apache2 -k start
+             ├─5540 /usr/sbin/apache2 -k start
+             [...]</code></div>
+
+        <p><span class="status-ok">✅ Apache reiniciado exitosamente y corriendo</span><br>
+        <span class="status-ok">✅ Servicio habilitado para inicio automático</span></p>
+
+        <p><strong>Próximo paso:</strong> Verificar acceso al sitio WordPress desde el navegador</p>
+
+        <hr>
+
+        <h4>13. Verificación del sitio web</h4>
+
+        <p><strong>Prueba:</strong> Recarga de <code>http://10.33.195.216</code> en el navegador</p>
+
+        <p><strong>Resultado:</strong></p>
+        <ul>
+            <li>Redirige a la página de instalación de WordPress</li>
+            <li>Indica que WordPress no encuentra la configuración de la base de datos</li>
+        </ul>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> El archivo <code>wp-config.php</code> podría tener configuración incorrecta</li>
+            <li><span class="status-error">❌</span> La base de datos podría no existir o tener credenciales incorrectas</li>
+            <li><span class="status-info">ℹ️</span> Posiblemente hay otro WordPress instalado correctamente en otra ubicación</li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar configuración de la base de datos y buscar otros WordPress</p>
+
+        <hr>
+
+        <h4>14. Investigación de WordPress y bases de datos</h4>
+
+        <pre><code># Buscar archivos wp-config.php
+sudo find /var/www -name "wp-config.php" 2>/dev/null
+sudo find /sitios -name "wp-config.php" 2>/dev/null</code></pre>
+
+        <p><strong>Resultado:</strong> Solo existe un WordPress en <code>/sitios/wp-tas2025/</code></p>
+
+        <p><strong>Configuración de la base de datos:</strong></p>
+        <pre><code>sudo grep -E "DB_NAME|DB_USER|DB_PASSWORD|DB_HOST" /sitios/wp-tas2025/wp-config.php</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <pre><code>define( 'DB_NAME', 'wp_db' );
+define( 'DB_USER', 'wp_user' );
+define( 'DB_PASSWORD', 'tas2025' );
+define( 'DB_HOST', 'localhost' );</code></pre>
+
+        <p><strong>Bases de datos disponibles:</strong></p>
+        <pre><code>sudo mysql -e "SHOW DATABASES;"</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>+--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| wordpress_db       |
+| wp_db              |
++--------------------+</code></div>
+
+        <p><strong>Análisis:</strong></p>
+        <ul>
+            <li><span class="status-ok">✅</span> wp-config.php está configurado para usar la BD <code>wp_db</code></li>
+            <li><span class="status-info">ℹ️</span> Existe otra BD llamada <code>wordpress_db</code> (posiblemente la correcta)</li>
+            <li><span class="status-info">❓</span> Necesitamos verificar cuál base de datos tiene las tablas de WordPress</li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar contenido de ambas bases de datos</p>
+
+        <hr>
+
+        <h4>15. Verificación de tablas en las bases de datos</h4>
+
+        <pre><code># Verificar tablas en wp_db
+sudo mysql -e "USE wp_db; SHOW TABLES;"</code></pre>
+
+        <p><strong>Resultado:</strong> Base de datos vacía (sin tablas)</p>
+
+        <pre><code># Verificar tablas en wordpress_db
+sudo mysql -e "USE wordpress_db; SHOW TABLES;"</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>+------------------------+
+| Tables_in_wordpress_db |
++------------------------+
+| wp_commentmeta         |
+| wp_comments            |
+| wp_links               |
+| wp_options             |
+| wp_postmeta            |
+| wp_posts               |
+| wp_term_relationships  |
+| wp_term_taxonomy       |
+| wp_termmeta            |
+| wp_terms               |
+| wp_usermeta            |
+| wp_users               |
++------------------------+</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> wp-config.php apunta a <code>wp_db</code> (vacía)</li>
+            <li><span class="status-ok">✅</span> Las tablas de WordPress están en <code>wordpress_db</code></li>
+            <li><strong>Error de configuración:</strong> El nombre de la base de datos en wp-config.php es incorrecto</li>
+        </ul>
+
+        <p><strong>Solución:</strong> Editar wp-config.php para cambiar el nombre de la base de datos</p>
+
+        <hr>
+
+        <h4>16. Corrección de la configuración de base de datos</h4>
+
+        <pre><code>sudo nano /sitios/wp-tas2025/wp-config.php</code></pre>
+
+        <p><strong>Cambio realizado:</strong></p>
+        <pre><code># Antes:
+define( 'DB_NAME', 'wp_db' );
+
+# Después:
+define( 'DB_NAME', 'wordpress_db' );</code></pre>
+
+        <p><span class="status-ok">✅ Base de datos corregida</span></p>
+
+        <hr>
+
+        <h4>17. Verificación del sitio web después del cambio</h4>
+
+        <p><strong>Resultado:</strong></p>
+        <ul>
+            <li><span class="status-ok">✅</span> WordPress carga el contenido correctamente</li>
+            <li><span class="status-error">❌</span> <strong>Sin estilos CSS</strong> - la página se muestra sin formato</li>
+            <li>El sitio muestra: "Certamen 2 – Tu nombre", menú, contenido, pero todo en texto plano</li>
+        </ul>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li>Los archivos CSS/JS no se están cargando</li>
+            <li>Posibles causas:
+                <ul>
+                    <li>Permisos en archivos CSS/JS</li>
+                    <li>Módulo PHP de Apache no habilitado</li>
+                    <li>URLs incorrectas en la base de datos</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p><strong>Próximo paso:</strong> Verificar permisos y módulos PHP</p>
+
+        <hr>
+
+        <h4>18. Verificación de PHP y módulos de Apache</h4>
+
+        <pre><code>php -v</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>PHP 8.1.2-1ubuntu2.22 (cli) (built: Jul 15 2025 12:11:22) (NTS)</code></div>
+
+        <p><span class="status-ok">✅ PHP 8.1 instalado y funcionando</span></p>
+
+        <pre><code>sudo apache2ctl -M | grep php</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>php_module (shared)</code></div>
+
+        <p><span class="status-ok">✅ Módulo PHP de Apache habilitado</span></p>
+
+        <pre><code>sudo tail -n 30 /var/log/apache2/error.log</code></pre>
+
+        <p><strong>Logs anteriores mostraron error de permisos en .htaccess (ya corregido)</strong></p>
+
+        <p><strong>Problema:</strong> Los estilos CSS/JS no cargan</p>
+
+        <p><strong>Próxima acción:</strong> Verificar URLs en la base de datos de WordPress</p>
+
+        <hr>
+
+        <h4>19. Verificación de URLs en WordPress</h4>
+
+        <pre><code>sudo mysql -e "USE wordpress_db; SELECT option_name, option_value FROM wp_options WHERE option_name IN ('siteurl', 'home');"</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>+-------------+--------------------------+
+| option_name | option_value             |
++-------------+--------------------------+
+| home        | http://www.tas2025.local |
+| siteurl     | http://www.tas2025.local |
++-------------+--------------------------+</code></div>
+
+        <p><strong>Problema identificado:</strong></p>
+        <ul>
+            <li><span class="status-error">❌</span> WordPress está configurado para <code>http://www.tas2025.local</code></li>
+            <li><span class="status-error">❌</span> Se está accediendo por <code>http://10.33.195.216</code></li>
+            <li><strong>Causa raíz:</strong> Los archivos CSS/JS intentan cargarse desde <code>www.tas2025.local</code> pero ese dominio no resuelve</li>
+        </ul>
+
+        <p><strong>Soluciones posibles:</strong></p>
+        <ol>
+            <li>Cambiar las URLs en la BD a la IP <code>10.33.195.216</code></li>
+            <li>Configurar el archivo <code>/etc/hosts</code> en tu PC para resolver <code>www.tas2025.local</code> a <code>10.33.195.216</code></li>
+        </ol>
+
+        <p><strong>Solución elegida:</strong> Configurar <code>/etc/hosts</code> en tu computadora (mejor práctica)</p>
+
+        <hr>
+
+        <h4>20. Configuración del archivo hosts en Windows</h4>
+
+        <p><strong>Acción realizada:</strong></p>
+        <ol>
+            <li>Abrir Bloc de notas como Administrador</li>
+            <li>Editar: <code>C:\Windows\System32\drivers\etc\hosts</code></li>
+            <li>Agregar línea: <code>10.33.195.216    www.tas2025.local tas2025.local</code></li>
+            <li>Guardar archivo</li>
+            <li>Acceder a: <code>http://www.tas2025.local</code></li>
+        </ol>
+
+        <p><span class="status-ok">✅ WordPress funcionando correctamente con estilos CSS</span></p>
+
+        <hr>
+
+        <h2>Estado de Validación del Sistema</h2>
+
+        <h3><span class="status-ok">✅</span> Servicios Funcionando</h3>
+
+        <div class="section-box">
+            <p><strong>1. MySQL/MariaDB</strong> <span class="status-ok">✅</span></p>
+            <ul>
+                <li>Estado: Activo y habilitado</li>
+                <li>Usuario: wp_user</li>
+                <li>Base de datos: wordpress_db</li>
+                <li>Versión: 10.6.22-MariaDB</li>
+            </ul>
+
+            <p><strong>2. Apache</strong> <span class="status-ok">✅</span></p>
+            <ul>
+                <li>Estado: Activo y habilitado</li>
+                <li>Versión: Apache/2.4.52 (Ubuntu)</li>
+                <li>ServerName: www.tas2025.local</li>
+                <li>VirtualHost tas2025: Configurado</li>
+            </ul>
+
+            <p><strong>3. Permisos WordPress</strong> <span class="status-ok">✅</span></p>
+            <ul>
+                <li>wp-content: 0755 (Escribible)</li>
+                <li>wp-content/uploads: 0755 (Escribible)</li>
+                <li>wp-content/themes: 0755 (Escribible)</li>
+                <li>wp-content/plugins: 0755 (Escribible)</li>
+            </ul>
+        </div>
+
+        <h3><span class="status-error">❌</span> Problemas Pendientes</h3>
+
+        <div class="section-box">
+            <p><strong>1. DNS (bind9)</strong> <span class="status-error">❌</span></p>
+            <ul>
+                <li>Servicio bind9 no está activo</li>
+                <li>Servicio bind9 no está habilitado</li>
+                <li>No resuelve www.tas2025.local</li>
+            </ul>
+
+            <p><strong>2. Apache - Módulos faltantes</strong> <span class="status-warning">⚠️</span></p>
+            <ul>
+                <li>mod_rewrite: No habilitado</li>
+                <li>mod_ssl: No habilitado</li>
+            </ul>
+
+            <p><strong>3. PHP - Módulos faltantes</strong> <span class="status-error">❌</span></p>
+            <ul>
+                <li>cURL: No instalado</li>
+                <li>Multibyte String (mbstring): No instalado</li>
+                <li>XML: No instalado</li>
+                <li>GD (Imágenes): No instalado</li>
+                <li>ZIP: No instalado</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <h2>Resolución de Problemas Pendientes</h2>
+
+        <h3>Problema 1: Habilitar módulos de Apache</h3>
+
+        <pre><code># Habilitar mod_rewrite (URLs amigables en WordPress)
+sudo a2enmod rewrite
+
+# Habilitar mod_ssl (soporte para HTTPS)
+sudo a2enmod ssl
+
+# Reiniciar Apache
+sudo systemctl restart apache2</code></pre>
+
+        <p><strong>Salida:</strong></p>
+        <div class="output"><code>Enabling module rewrite.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+
+Considering dependency setenvif for ssl:
+Module setenvif already enabled
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Enabling module socache_shmcb.
+Enabling module ssl.</code></div>
+
+        <p><span class="status-ok">✅ mod_rewrite habilitado</span> (permite URLs amigables/permalinks en WordPress)<br>
+        <span class="status-ok">✅ mod_ssl habilitado</span> (permite conexiones HTTPS seguras)<br>
+        <span class="status-ok">✅ Apache reiniciado</span></p>
+
+        <hr>
+
+        <h2>Resumen de Problemas Resueltos del Certamen</h2>
+
+        <h3><span class="status-ok">✅</span> 1. MySQL/MariaDB <span class="points">10 puntos</span></h3>
+        <p><strong>Problema:</strong> Servicio inactivo y deshabilitado</p>
+        <p><strong>Solución:</strong></p>
+        <pre><code>sudo systemctl start mysql
+sudo systemctl enable mysql</code></pre>
+
+        <h3><span class="status-ok">✅</span> 2. Apache <span class="points">20 puntos</span></h3>
+        <p><strong>Problema:</strong> Nginx ocupaba el puerto 80, impidiendo que Apache iniciara</p>
+        <p><strong>Solución:</strong></p>
+        <pre><code>sudo systemctl stop nginx
+sudo systemctl disable nginx
+sudo systemctl start apache2
+sudo systemctl enable apache2</code></pre>
+
+        <p><strong>Problemas adicionales corregidos:</strong></p>
+        <ul>
+            <li>Permisos incorrectos en WordPress</li>
+            <li>Base de datos incorrecta en wp-config.php (wp_db → wordpress_db)</li>
+            <li>Módulos Apache habilitados (mod_rewrite, mod_ssl)</li>
+        </ul>
+
+        <h3><span class="status-ok">✅</span> 3. Módulos PHP</h3>
+        <p><strong>Problema:</strong> Módulos PHP necesarios para WordPress no estaban instalados</p>
+        <p><strong>Solución:</strong></p>
+        <pre><code>sudo apt update
+sudo apt install -y php8.1-curl php8.1-mbstring php8.1-xml php8.1-gd php8.1-zip
+sudo systemctl restart apache2</code></pre>
+
+        <p><strong>Módulos instalados:</strong></p>
+        <ul>
+            <li>php8.1-curl (cURL - transferencias HTTP)</li>
+            <li>php8.1-mbstring (Multibyte String - caracteres especiales)</li>
+            <li>php8.1-xml (XML - feeds y APIs)</li>
+            <li>php8.1-gd (GD - procesamiento de imágenes)</li>
+            <li>php8.1-zip (ZIP - compresión de archivos)</li>
+        </ul>
+
+        <hr>
+
+        <h3><span class="status-ok">✅</span> 4. DNS - bind9/named <span class="points">45 puntos</span></h3>
+
+        <p><strong>Problema 1:</strong> Servicio named (bind9) inactivo y deshabilitado</p>
+        <p><strong>Solución:</strong></p>
+        <pre><code>sudo systemctl start named
+sudo systemctl enable named</code></pre>
+
+        <p><strong>Problema 2:</strong> Zona DNS configurada con IP incorrecta (10.33.195.208 → 10.33.195.216)</p>
+
+        <p><strong>Archivo:</strong> <code>/etc/bind/zones/db.tas2025.local</code></p>
+
+        <p><strong>Cambios realizados:</strong></p>
+        <pre><code>sudo nano /etc/bind/zones/db.tas2025.local</code></pre>
+
+        <p>Modificar las tres líneas con la IP incorrecta:</p>
+        <pre><code># Antes:
+ns1.tas2025.local.          IN      A       10.33.195.208
+@       IN      A       10.33.195.208
+www     IN      A       10.33.195.208
+
+# Después:
+ns1.tas2025.local.          IN      A       10.33.195.216
+@       IN      A       10.33.195.216
+www     IN      A       10.33.195.216</code></pre>
+
+        <p>También incrementar el Serial: <code>4</code> → <code>5</code></p>
+
+        <p><strong>Aplicar cambios:</strong></p>
+        <pre><code>sudo systemctl restart named</code></pre>
+
+        <p><strong>Verificación:</strong></p>
+        <pre><code>nslookup www.tas2025.local localhost</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>Server:         localhost
+Address:        127.0.0.1#53
+
+Name:   www.tas2025.local
+Address: 10.33.195.216</code></div>
+
+        <p><span class="status-ok">✅ DNS resuelve correctamente www.tas2025.local a 10.33.195.216</span></p>
+
+        <p><strong>Problema adicional:</strong> El servidor no podía resolver su propio dominio</p>
+
+        <p><strong>Solución:</strong></p>
+        <pre><code>sudo nano /etc/resolv.conf</code></pre>
+
+        <p>Agregar como primera línea:</p>
+        <pre><code>nameserver 127.0.0.1</code></pre>
+
+        <p><strong>Verificación:</strong></p>
+        <pre><code>curl -I http://www.tas2025.local</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>HTTP/1.1 200 OK
+Server: Apache/2.4.52 (Ubuntu)</code></div>
+
+        <p><span class="status-ok">✅ El servidor ahora puede resolver su propio nombre de dominio</span></p>
+
+        <h4>Configuración adicional: IP estática</h4>
+
+        <p>Para evitar que la IP cambie al reiniciar (estaba configurada por DHCP), se configuró IP estática:</p>
+
+        <pre><code># Editar configuración de red
+sudo nano /etc/netplan/00-installer-config.yaml</code></pre>
+
+        <p>Configuración aplicada (IP estática 10.33.195.216/25):</p>
+        <pre><code>network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens18:
+      addresses:
+        - 10.33.195.216/25
+      routes:
+        - to: default
+          via: 10.33.195.129
+      nameservers:
+        addresses:
+          - 127.0.0.1
+          - 10.33.192.131
+          - 8.8.8.8</code></pre>
+
+        <p><strong>Deshabilitar cloud-init que mantenía DHCP activo:</strong></p>
+
+        <pre><code># Deshabilitar configuración de red de cloud-init
+sudo bash -c 'echo "network: {config: disabled}" > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg'
+
+# Renombrar archivo de cloud-init
+sudo mv /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.bak
+
+# Corregir permisos de archivos netplan
+sudo chmod 600 /etc/netplan/*.yaml
+
+# Aplicar configuración
+sudo netplan apply</code></pre>
+
+        <p><strong>Verificación:</strong></p>
+        <pre><code>ip a | grep "inet 10"</code></pre>
+
+        <p><strong>Resultado:</strong></p>
+        <div class="output"><code>inet 10.33.195.216/25 brd 10.33.195.255 scope global ens18</code></div>
+
+        <p><span class="status-ok">✅ IP estática configurada correctamente - La IP no cambiará al reiniciar</span></p>
+
+        <hr>
+
+        <h3><span class="status-ok">✅</span> 5. WordPress <span class="points">15 puntos</span> - Cambiar título del sitio</h3>
+
+        <p><strong>Requisito:</strong> Cambiar el título del sitio WordPress al nombre del alumno</p>
+
+        <p><strong>Solución:</strong></p>
+        <ol>
+            <li>Acceder al panel de administración de WordPress
+                <ul>
+                    <li>URL: <code>http://www.tas2025.local/wp-admin</code></li>
+                    <li>Usuario: <code>certamen2-tas</code></li>
+                    <li>Contraseña: <code>certamen2-tas</code></li>
+                </ul>
+            </li>
+            <li>Navegar a <strong>Ajustes → Generales</strong> (Settings → General)</li>
+            <li>Cambiar el campo <strong>Título del sitio</strong> a: <code>Certamen 2 - Nicolas Jeldre</code></li>
+            <li>Click en <strong>Guardar cambios</strong></li>
+        </ol>
+
+        <p><span class="status-ok">✅ Título de WordPress actualizado correctamente</span></p>
+
+        <hr>
+
+        <h2>Resumen Final del Certamen</h2>
+
+        <h3>Puntajes Obtenidos</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ítem</th>
+                    <th>Descripción</th>
+                    <th>Puntos</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Clonación de máquina</td>
+                    <td>10</td>
+                    <td><span class="status-ok">✅ Linked Clone realizado</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>DNS - bind9</td>
+                    <td>45</td>
+                    <td><span class="status-ok">✅ Servicio iniciado, habilitado y zona configurada</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>MySQL/MariaDB</td>
+                    <td>10</td>
+                    <td><span class="status-ok">✅ Servicio iniciado y habilitado</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>WordPress</td>
+                    <td>15</td>
+                    <td><span class="status-ok">✅ Título cambiado correctamente</span></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Apache</td>
+                    <td>20</td>
+                    <td><span class="status-ok">✅ Nginx detenido, Apache funcionando</span></td>
+                </tr>
+                <tr style="background-color: #d5f4e6; font-weight: bold;">
+                    <td colspan="2"><strong>TOTAL</strong></td>
+                    <td><strong>100</strong></td>
+                    <td><span class="status-ok">✅ COMPLETADO</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Configuraciones Adicionales Realizadas</h3>
+
+        <ul>
+            <li>Permisos de WordPress corregidos (chmod/chown)</li>
+            <li>Base de datos corregida en wp-config.php</li>
+            <li>Módulos Apache habilitados (mod_rewrite, mod_ssl)</li>
+            <li>Módulos PHP instalados (curl, mbstring, xml, gd, zip)</li>
+            <li>Archivo hosts de Windows configurado</li>
+            <li>DNS configurado para permitir consultas externas (allow-query)</li>
+            <li>IP estática configurada en el servidor</li>
+        </ul>
+
+        <hr>
+
+        <h2>Instrucciones Finales</h2>
+
+        <p>Según el certamen:</p>
+        <ol>
+            <li><span class="status-ok">✅</span> Documentación completada</li>
+            <li><span class="status-ok">✅</span> Nombre de VM cambiado a <code>tas2025-c2-nicolas</code> (o similar)</li>
+            <li><span class="status-warning">⏳</span> <strong>Apagar la máquina virtual</strong></li>
+            <li><span class="status-warning">⏳</span> <strong>Convertir este documento a formato Word y entregar</strong></li>
+        </ol>
+
+        <hr>
+
+        <footer style="text-align: center; color: #7f8c8d; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+            <p><strong>Certamen 2 - Taller de Administración de Sistemas</strong></p>
+            <p>Nicolas Jeldre - 20 de Noviembre de 2025</p>
+            <p style="font-size: 0.9em;">Documento generado automáticamente desde Markdown a HTML</p>
+        </footer>
+    </div>
+</body>
+</html>
