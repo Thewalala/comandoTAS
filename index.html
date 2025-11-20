@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación Certamen TAS - Nicolas Jeldre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #667eea;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 1.1em;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+        .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .badge {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="emoji">🎓</div>
+            <h1>Certamen TAS</h1>
+            <p>Documentación Completa - Nicolas Jeldre</p>
+            <div class="badge">100/100 Puntos ✅</div>
+        </div>
+        
+        <div class="content">
+            <div class="card">
+                <h2>📄 Resolución Completa</h2>
+                <p>Documentación detallada paso a paso de la resolución del Certamen 2 de Taller de Administración de Sistemas. Incluye diagnóstico completo, solución de problemas en MySQL/MariaDB, Apache, DNS (bind9) y WordPress.</p>
+                <a href="certamen_tas_resolucion.html" class="btn">Ver Resolución Completa</a>
+            </div>
+            
+            <div class="card">
+                <h2>📋 Guía de Comandos</h2>
+                <p>Referencia rápida con todos los comandos esenciales utilizados. Incluye comandos de MySQL, Apache, DNS, PHP, configuración de red y diagnóstico de sistemas Linux.</p>
+                <a href="comandos_certamen_resumen.html" class="btn btn-secondary">Ver Guía de Comandos</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Taller de Administración de Sistemas</strong></p>
+            <p>Universidad del Bío-Bío - Noviembre 2025</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Servidor: Ubuntu 22.04 | VM: tas2025-c2-nicolas</p>
+        </div>
+    </div>
+</body>
+</html>

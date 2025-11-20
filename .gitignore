@@ -1,0 +1,31 @@
+# Archivos del sistema
+*.lnk
+*.url
+desktop.ini
+.DS_Store
+
+# Carpetas personales
+Nico/
+NuevaVersion/
+OneDrive_2025-11-12/
+practica/
+Practica biobio/
+ingenieria/
+apuntes/
+GodMode.*
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+*.vbox
+*.vbox-prev
+*.vdi
+
+# PDFs (excepto el informe si quieres incluirlo)
+# *.pdf
+
+# Archivos grandes
+*.iso
+*.zip
+*.rar
