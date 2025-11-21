@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resolución Certamen TAS - Servidor Ubuntu</title>
+    <title>Guía de Solución de Problemas - Servidor Ubuntu</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -144,10 +144,10 @@
 <body>
     <div class="container">
         <div class="nav-buttons" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-            <a href="comandos_certamen_resumen.html" class="btn" style="padding: 12px 24px; background-color: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; display: inline-block;">📋 Ver Comandos de Referencia Rápida</a>
+            <a href="comandos_certamen_resumen.html" class="btn" style="padding: 12px 24px; background-color: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; display: inline-block;">📋 Ver Comandos Esenciales</a>
         </div>
 
-        <h1>Resolución Certamen TAS - Servidor Ubuntu</h1>
+        <h1>Guía de Solución de Problemas - Servidor Ubuntu</h1>
         
         <div class="metadata">
             <p><strong>Fecha:</strong> 20 de Noviembre de 2025</p>
@@ -159,16 +159,16 @@
 
         <h2>Resumen Ejecutivo</h2>
         
-        <p>Este documento detalla la resolución completa del Certamen 2 de Taller de Administración de Sistemas. Se diagnosticaron y corrigieron problemas en los servicios DNS (bind9), MySQL/MariaDB, Apache y WordPress, logrando un puntaje de <strong>100/100 puntos</strong>.</p>
+        <p>Este documento detalla la resolución paso a paso de problemas comunes en servidores Ubuntu. Se incluyen diagnósticos y soluciones para los servicios DNS (bind9), MySQL/MariaDB, Apache y WordPress.</p>
 
         <div class="section-box">
             <p><strong>Problemas principales resueltos:</strong></p>
             <ol>
-                <li><strong>MySQL/MariaDB (10 pts):</strong> Servicio inactivo - Se inició y habilitó</li>
-                <li><strong>Apache (20 pts):</strong> Puerto 80 ocupado por Nginx - Se detuvo Nginx e inició Apache</li>
-                <li><strong>DNS bind9 (45 pts):</strong> Servicio inactivo y zona con IP incorrecta - Se corrigió</li>
-                <li><strong>WordPress (15 pts):</strong> Título del sitio cambiado correctamente</li>
-                <li><strong>Clonación VM (10 pts):</strong> Linked Clone realizado en Proxmox</li>
+                <li><strong>MySQL/MariaDB:</strong> Servicio inactivo - Se inició y habilitó</li>
+                <li><strong>Apache:</strong> Puerto 80 ocupado por Nginx - Se detuvo Nginx e inició Apache</li>
+                <li><strong>DNS bind9:</strong> Servicio inactivo y zona con IP incorrecta - Se corrigió</li>
+                <li><strong>WordPress:</strong> Configuración de base de datos y permisos corregidos</li>
+                <li><strong>Red:</strong> IP estática configurada correctamente</li>
             </ol>
         </div>
 
@@ -851,15 +851,15 @@ Enabling module ssl.</code></div>
 
         <hr>
 
-        <h2>Resumen de Problemas Resueltos del Certamen</h2>
+        <h2>Resumen de Problemas Resueltos</h2>
 
-        <h3><span class="status-ok">✅</span> 1. MySQL/MariaDB <span class="points">10 puntos</span></h3>
+        <h3><span class="status-ok">✅</span> 1. MySQL/MariaDB</h3>
         <p><strong>Problema:</strong> Servicio inactivo y deshabilitado</p>
         <p><strong>Solución:</strong></p>
         <pre><code>sudo systemctl start mysql
 sudo systemctl enable mysql</code></pre>
 
-        <h3><span class="status-ok">✅</span> 2. Apache <span class="points">20 puntos</span></h3>
+        <h3><span class="status-ok">✅</span> 2. Apache</h3>
         <p><strong>Problema:</strong> Nginx ocupaba el puerto 80, impidiendo que Apache iniciara</p>
         <p><strong>Solución:</strong></p>
         <pre><code>sudo systemctl stop nginx
@@ -892,7 +892,7 @@ sudo systemctl restart apache2</code></pre>
 
         <hr>
 
-        <h3><span class="status-ok">✅</span> 4. DNS - bind9/named <span class="points">45 puntos</span></h3>
+        <h3><span class="status-ok">✅</span> 4. DNS - bind9/named</h3>
 
         <p><strong>Problema 1:</strong> Servicio named (bind9) inactivo y deshabilitado</p>
         <p><strong>Solución:</strong></p>
@@ -999,7 +999,7 @@ sudo netplan apply</code></pre>
 
         <hr>
 
-        <h3><span class="status-ok">✅</span> 5. WordPress <span class="points">15 puntos</span> - Cambiar título del sitio</h3>
+        <h3><span class="status-ok">✅</span> 5. WordPress - Configuración</h3>
 
         <p><strong>Requisito:</strong> Cambiar el título del sitio WordPress al nombre del alumno</p>
 
@@ -1021,53 +1021,42 @@ sudo netplan apply</code></pre>
 
         <hr>
 
-        <h2>Resumen Final del Certamen</h2>
+        <h2>Resumen de Configuración</h2>
 
-        <h3>Puntajes Obtenidos</h3>
+        <h3>Servicios Configurados</h3>
 
         <table>
             <thead>
                 <tr>
-                    <th>Ítem</th>
+                    <th>Servicio</th>
                     <th>Descripción</th>
-                    <th>Puntos</th>
                     <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Clonación de máquina</td>
-                    <td>10</td>
-                    <td><span class="status-ok">✅ Linked Clone realizado</span></td>
-                </tr>
-                <tr>
-                    <td>2</td>
                     <td>DNS - bind9</td>
-                    <td>45</td>
-                    <td><span class="status-ok">✅ Servicio iniciado, habilitado y zona configurada</span></td>
+                    <td>Servicio iniciado, habilitado y zona configurada</td>
+                    <td><span class="status-ok">✅ COMPLETADO</span></td>
                 </tr>
                 <tr>
-                    <td>3</td>
                     <td>MySQL/MariaDB</td>
-                    <td>10</td>
-                    <td><span class="status-ok">✅ Servicio iniciado y habilitado</span></td>
+                    <td>Servicio iniciado y habilitado</td>
+                    <td><span class="status-ok">✅ COMPLETADO</span></td>
                 </tr>
                 <tr>
-                    <td>4</td>
                     <td>WordPress</td>
-                    <td>15</td>
-                    <td><span class="status-ok">✅ Título cambiado correctamente</span></td>
+                    <td>Base de datos y permisos configurados</td>
+                    <td><span class="status-ok">✅ COMPLETADO</span></td>
                 </tr>
                 <tr>
-                    <td>5</td>
                     <td>Apache</td>
-                    <td>20</td>
-                    <td><span class="status-ok">✅ Nginx detenido, Apache funcionando</span></td>
+                    <td>Servidor web funcionando correctamente</td>
+                    <td><span class="status-ok">✅ COMPLETADO</span></td>
                 </tr>
-                <tr style="background-color: #d5f4e6; font-weight: bold;">
-                    <td colspan="2"><strong>TOTAL</strong></td>
-                    <td><strong>100</strong></td>
+                <tr>
+                    <td>Red</td>
+                    <td>IP estática y DNS configurados</td>
                     <td><span class="status-ok">✅ COMPLETADO</span></td>
                 </tr>
             </tbody>
@@ -1087,20 +1076,20 @@ sudo netplan apply</code></pre>
 
         <hr>
 
-        <h2>Instrucciones Finales</h2>
+        <h2>Pasos de Verificación</h2>
 
-        <p>Según el certamen:</p>
+        <p>Lista de verificación final:</p>
         <ol>
-            <li><span class="status-ok">✅</span> Documentación completada</li>
-            <li><span class="status-ok">✅</span> Nombre de VM cambiado a <code>tas2025-c2-nicolas</code> (o similar)</li>
-            <li><span class="status-warning">⏳</span> <strong>Apagar la máquina virtual</strong></li>
-            <li><span class="status-warning">⏳</span> <strong>Convertir este documento a formato Word y entregar</strong></li>
+            <li><span class="status-ok">✅</span> Todos los servicios activos y habilitados</li>
+            <li><span class="status-ok">✅</span> Configuración de red correcta</li>
+            <li><span class="status-ok">✅</span> WordPress funcionando correctamente</li>
+            <li><span class="status-ok">✅</span> DNS resolviendo dominios</li>
         </ol>
 
         <hr>
 
         <footer style="text-align: center; color: #7f8c8d; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
-            <p><strong>Certamen 2 - Taller de Administración de Sistemas</strong></p>
+            <p><strong>Guía de Administración de Sistemas Ubuntu</strong></p>
             <p>20 de Noviembre de 2025</p>
             <p style="font-size: 0.9em;">Documento generado automáticamente desde Markdown a HTML</p>
         </footer>
