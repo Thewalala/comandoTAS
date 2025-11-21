@@ -22,8 +22,17 @@ GodMode.*
 *.vbox-prev
 *.vdi
 
-# PDFs (excepto el informe si quieres incluirlo)
-# *.pdf
+# Documentos personales
+*.docx
+*.xlsx
+*.pdf
+*.exe
+
+# Archivos markdown fuente (solo mantener HTML)
+*.md
+
+# Config de VSCode
+.vscode/
 
 # Archivos grandes
 *.iso
