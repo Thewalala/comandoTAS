@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura de Archivos del Servidor - Ubuntu TAS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn-home {
+            background-color: #95a5a6;
+        }
+        .btn-home:hover {
+            background-color: #7f8c8d;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 8px;
+            margin-top: 30px;
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 25px;
+        }
+        .tree {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #27ae60;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+        .tree-folder {
+            color: #61afef;
+            font-weight: bold;
+        }
+        .tree-file {
+            color: #98c379;
+        }
+        .tree-config {
+            color: #e5c07b;
+        }
+        .tree-log {
+            color: #c678dd;
+        }
+        .tree-comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+        .section-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #856404;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .warning::before {
+            content: "⚠️ ";
+            font-weight: bold;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .info::before {
+            content: "ℹ️ ";
+            font-weight: bold;
+        }
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #155724;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .success::before {
+            content: "✅ ";
+            font-weight: bold;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        pre code {
+            background-color: transparent;
+            color: #f8f8f2;
+            padding: 0;
+        }
+        .path-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .path-card h4 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-home">🏠 Inicio</a>
+            <a href="certamen_tas_resolucion.html" class="btn">📄 Resolución Completa</a>
+            <a href="comandos_certamen_resumen.html" class="btn">📋 Comandos</a>
+        </div>
+
+        <h1>📂 Estructura de Archivos del Servidor Ubuntu</h1>
+
+        <div class="info">
+            <strong>Propósito:</strong> Esta página muestra la estructura completa de archivos y directorios necesarios para configurar correctamente un servidor Ubuntu con Apache, MySQL, WordPress y DNS (bind9).
+        </div>
+
+        <hr>
+
+        <h2>🌳 Árbol de Directorios Principal</h2>
+
+        <div class="tree">
+<span class="tree-folder">/</span> (raíz del sistema)
+├── <span class="tree-folder">etc/</span> <span class="tree-comment"># Archivos de configuración del sistema</span>
+│   ├── <span class="tree-folder">apache2/</span> <span class="tree-comment"># Configuración de Apache</span>
+│   │   ├── <span class="tree-config">apache2.conf</span> <span class="tree-comment"># Configuración principal</span>
+│   │   ├── <span class="tree-config">ports.conf</span> <span class="tree-comment"># Puertos (80, 443)</span>
+│   │   ├── <span class="tree-folder">sites-available/</span> <span class="tree-comment"># Sitios disponibles</span>
+│   │   │   ├── <span class="tree-config">000-default.conf</span>
+│   │   │   └── <span class="tree-config">wp-tas2025.conf</span> <span class="tree-comment"># VirtualHost de WordPress</span>
+│   │   ├── <span class="tree-folder">sites-enabled/</span> <span class="tree-comment"># Sitios activos (symlinks)</span>
+│   │   │   └── <span class="tree-config">wp-tas2025.conf</span> → ../sites-available/wp-tas2025.conf
+│   │   ├── <span class="tree-folder">mods-available/</span> <span class="tree-comment"># Módulos disponibles</span>
+│   │   └── <span class="tree-folder">mods-enabled/</span> <span class="tree-comment"># Módulos activos</span>
+│   │       ├── <span class="tree-config">rewrite.load</span> <span class="tree-comment"># mod_rewrite</span>
+│   │       ├── <span class="tree-config">ssl.load</span> <span class="tree-comment"># mod_ssl</span>
+│   │       └── <span class="tree-config">php8.1.load</span> <span class="tree-comment"># mod_php</span>
+│   │
+│   ├── <span class="tree-folder">bind/</span> <span class="tree-comment"># Configuración de DNS</span>
+│   │   ├── <span class="tree-config">named.conf</span> <span class="tree-comment"># Configuración principal</span>
+│   │   ├── <span class="tree-config">named.conf.options</span> <span class="tree-comment"># Opciones globales</span>
+│   │   ├── <span class="tree-config">named.conf.local</span> <span class="tree-comment"># Zonas locales</span>
+│   │   ├── <span class="tree-config">named.conf.default-zones</span> <span class="tree-comment"># Zonas por defecto</span>
+│   │   └── <span class="tree-folder">zones/</span> <span class="tree-comment"># Archivos de zona</span>
+│   │       ├── <span class="tree-config">db.tas2025.local</span> <span class="tree-comment"># Zona directa</span>
+│   │       └── <span class="tree-config">db.192.168.1</span> <span class="tree-comment"># Zona reversa (opcional)</span>
+│   │
+│   ├── <span class="tree-folder">mysql/</span> <span class="tree-comment"># Configuración de MySQL/MariaDB</span>
+│   │   ├── <span class="tree-config">my.cnf</span> <span class="tree-comment"># Configuración principal</span>
+│   │   └── <span class="tree-folder">mariadb.conf.d/</span>
+│   │       └── <span class="tree-config">50-server.cnf</span>
+│   │
+│   ├── <span class="tree-folder">netplan/</span> <span class="tree-comment"># Configuración de red</span>
+│   │   ├── <span class="tree-config">00-installer-config.yaml</span> <span class="tree-comment"># Config de red principal</span>
+│   │   └── <span class="tree-config">50-cloud-init.yaml.bak</span> <span class="tree-comment"># Backup cloud-init</span>
+│   │
+│   ├── <span class="tree-folder">cloud/</span>
+│   │   └── <span class="tree-folder">cloud.cfg.d/</span>
+│   │       └── <span class="tree-config">99-disable-network-config.cfg</span> <span class="tree-comment"># Deshabilitar cloud-init</span>
+│   │
+│   ├── <span class="tree-config">resolv.conf</span> <span class="tree-comment"># Servidores DNS</span>
+│   └── <span class="tree-config">hosts</span> <span class="tree-comment"># Resolución local de nombres</span>
+│
+├── <span class="tree-folder">var/</span> <span class="tree-comment"># Datos variables</span>
+│   ├── <span class="tree-folder">www/</span> <span class="tree-comment"># Raíz web por defecto</span>
+│   │   └── <span class="tree-folder">html/</span>
+│   │       └── <span class="tree-file">index.html</span> <span class="tree-comment"># Página por defecto</span>
+│   │
+│   ├── <span class="tree-folder">log/</span> <span class="tree-comment"># Logs del sistema</span>
+│   │   ├── <span class="tree-folder">apache2/</span>
+│   │   │   ├── <span class="tree-log">access.log</span> <span class="tree-comment"># Accesos HTTP</span>
+│   │   │   └── <span class="tree-log">error.log</span> <span class="tree-comment"># Errores de Apache</span>
+│   │   ├── <span class="tree-folder">mysql/</span>
+│   │   │   └── <span class="tree-log">error.log</span>
+│   │   └── <span class="tree-log">syslog</span> <span class="tree-comment"># Log del sistema</span>
+│   │
+│   └── <span class="tree-folder">lib/</span>
+│       └── <span class="tree-folder">mysql/</span> <span class="tree-comment"># Datos de bases de datos</span>
+│           ├── <span class="tree-folder">wordpress_db/</span>
+│           └── <span class="tree-folder">wp_db/</span>
+│
+└── <span class="tree-folder">sitios/</span> <span class="tree-comment"># Directorio personalizado para sitios</span>
+    └── <span class="tree-folder">wp-tas2025/</span> <span class="tree-comment"># WordPress instalado aquí</span>
+        ├── <span class="tree-file">index.php</span>
+        ├── <span class="tree-config">wp-config.php</span> <span class="tree-comment"># Configuración de WordPress</span>
+        ├── <span class="tree-file">.htaccess</span>
+        ├── <span class="tree-folder">wp-content/</span> <span class="tree-comment"># Contenido (755)</span>
+        │   ├── <span class="tree-folder">themes/</span> <span class="tree-comment"># Temas</span>
+        │   ├── <span class="tree-folder">plugins/</span> <span class="tree-comment"># Plugins</span>
+        │   └── <span class="tree-folder">uploads/</span> <span class="tree-comment"># Archivos subidos</span>
+        ├── <span class="tree-folder">wp-admin/</span> <span class="tree-comment"># Panel administración</span>
+        └── <span class="tree-folder">wp-includes/</span> <span class="tree-comment"># Core de WordPress</span>
+        </div>
+
+        <hr>
+
+        <h2>📋 Detalles de Configuración por Servicio</h2>
+
+        <div class="path-card">
+            <h4>🌐 Apache Web Server</h4>
+            
+            <h3>Archivo Principal: <code>/etc/apache2/apache2.conf</code></h3>
+            <pre><code># Directiva importante
+ServerRoot "/etc/apache2"
+
+# Incluir configuraciones
+IncludeOptional mods-enabled/*.load
+IncludeOptional mods-enabled/*.conf
+IncludeOptional sites-enabled/*.conf</code></pre>
+
+            <h3>VirtualHost: <code>/etc/apache2/sites-available/wp-tas2025.conf</code></h3>
+            <pre><code>&lt;VirtualHost *:80&gt;
+    ServerName www.tas2025.local
+    ServerAdmin webmaster@localhost
+    DocumentRoot /sitios/wp-tas2025
+
+    &lt;Directory /sitios/wp-tas2025&gt;
+        Options FollowSymLinks
+        AllowOverride All
+        Require all granted
+    &lt;/Directory&gt;
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;</code></pre>
+
+            <div class="success">
+                <strong>Habilitar sitio:</strong> <code>sudo a2ensite wp-tas2025.conf</code><br>
+                <strong>Deshabilitar sitio:</strong> <code>sudo a2dissite 000-default.conf</code>
+            </div>
+        </div>
+
+        <div class="path-card">
+            <h4>🗄️ MySQL/MariaDB</h4>
+            
+            <h3>Archivo: <code>/etc/mysql/my.cnf</code></h3>
+            <pre><code>[mysqld]
+bind-address = 127.0.0.1
+port = 3306
+datadir = /var/lib/mysql
+socket = /var/run/mysqld/mysqld.sock</code></pre>
+
+            <h3>Bases de Datos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Base de Datos</th>
+                        <th>Usuario</th>
+                        <th>Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>wordpress_db</code></td>
+                        <td><code>wp_user</code></td>
+                        <td>Base de datos activa de WordPress</td>
+                    </tr>
+                    <tr>
+                        <td><code>wp_db</code></td>
+                        <td><code>wp_user</code></td>
+                        <td>Base de datos vacía (no usar)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="path-card">
+            <h4>🌍 DNS - bind9/named</h4>
+            
+            <h3>Configuración Principal: <code>/etc/bind/named.conf.local</code></h3>
+            <pre><code>zone "tas2025.local" {
+    type master;
+    file "/etc/bind/zones/db.tas2025.local";
+};</code></pre>
+
+            <h3>Opciones: <code>/etc/bind/named.conf.options</code></h3>
+            <pre><code>options {
+    directory "/var/cache/bind";
+    
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+    
+    dnssec-validation auto;
+    
+    listen-on-v6 { any; };
+    
+    allow-query { any; };
+};</code></pre>
+
+            <h3>Zona DNS: <code>/etc/bind/zones/db.tas2025.local</code></h3>
+            <pre><code>$TTL    604800
+@       IN      SOA     ns1.tas2025.local. admin.tas2025.local. (
+                        5           ; Serial
+                        604800      ; Refresh
+                        86400       ; Retry
+                        2419200     ; Expire
+                        604800 )    ; Negative Cache TTL
+
+; Registros de nombres
+@       IN      NS      ns1.tas2025.local.
+ns1     IN      A       192.168.1.100
+@       IN      A       192.168.1.100
+www     IN      A       192.168.1.100</code></pre>
+
+            <div class="warning">
+                <strong>Importante:</strong> Cambiar la IP <code>192.168.1.100</code> por la IP real del servidor. Incrementar el Serial cada vez que se modifique la zona.
+            </div>
+        </div>
+
+        <div class="path-card">
+            <h4>🌐 Configuración de Red</h4>
+            
+            <h3>Netplan: <code>/etc/netplan/00-installer-config.yaml</code></h3>
+            <pre><code>network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens18:
+      addresses:
+        - 192.168.1.100/24
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+        addresses:
+          - 127.0.0.1
+          - 8.8.8.8
+          - 8.8.4.4</code></pre>
+
+            <h3>DNS del Sistema: <code>/etc/resolv.conf</code></h3>
+            <pre><code>nameserver 127.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4</code></pre>
+
+            <h3>Hosts Locales: <code>/etc/hosts</code></h3>
+            <pre><code>127.0.0.1       localhost
+127.0.1.1       servidor
+192.168.1.100   www.tas2025.local tas2025.local
+
+# IPv6
+::1     localhost ip6-localhost ip6-loopback</code></pre>
+        </div>
+
+        <div class="path-card">
+            <h4>📝 WordPress</h4>
+            
+            <h3>Ubicación: <code>/sitios/wp-tas2025/</code></h3>
+            
+            <h3>Configuración: <code>/sitios/wp-tas2025/wp-config.php</code></h3>
+            <pre><code>&lt;?php
+// Configuración de la base de datos
+define( 'DB_NAME', 'wordpress_db' );
+define( 'DB_USER', 'wp_user' );
+define( 'DB_PASSWORD', 'tu_contraseña' );
+define( 'DB_HOST', 'localhost' );
+define( 'DB_CHARSET', 'utf8mb4' );
+define( 'DB_COLLATE', '' );
+
+// Claves de seguridad (generar en https://api.wordpress.org/secret-key/1.1/salt/)
+define( 'AUTH_KEY',         'valor-generado' );
+define( 'SECURE_AUTH_KEY',  'valor-generado' );
+// ... más claves
+
+$table_prefix = 'wp_';
+
+define( 'WP_DEBUG', false );
+
+if ( ! defined( 'ABSPATH' ) ) {
+    define( 'ABSPATH', __DIR__ . '/' );
+}
+
+require_once ABSPATH . 'wp-settings.php';</code></pre>
+
+            <div class="info">
+                <strong>Permisos correctos:</strong><br>
+                • Propietario: <code>www-data:www-data</code><br>
+                • Directorios: <code>755</code><br>
+                • Archivos: <code>644</code><br>
+                • wp-config.php: <code>640</code> (más seguro)
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>🔐 Tabla de Permisos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ruta</th>
+                    <th>Propietario</th>
+                    <th>Permisos</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/etc/apache2/</code></td>
+                    <td>root:root</td>
+                    <td>755</td>
+                    <td>Configuración de Apache</td>
+                </tr>
+                <tr>
+                    <td><code>/etc/bind/</code></td>
+                    <td>root:bind</td>
+                    <td>755</td>
+                    <td>Configuración de DNS</td>
+                </tr>
+                <tr>
+                    <td><code>/etc/bind/zones/</code></td>
+                    <td>root:bind</td>
+                    <td>755</td>
+                    <td>Archivos de zona DNS</td>
+                </tr>
+                <tr>
+                    <td><code>/sitios/wp-tas2025/</code></td>
+                    <td>www-data:www-data</td>
+                    <td>755</td>
+                    <td>Directorio raíz de WordPress</td>
+                </tr>
+                <tr>
+                    <td><code>/sitios/wp-tas2025/wp-content/</code></td>
+                    <td>www-data:www-data</td>
+                    <td>755</td>
+                    <td>Contenido de WordPress (debe ser escribible)</td>
+                </tr>
+                <tr>
+                    <td><code>/sitios/wp-tas2025/wp-config.php</code></td>
+                    <td>www-data:www-data</td>
+                    <td>640</td>
+                    <td>Configuración (proteger contraseñas)</td>
+                </tr>
+                <tr>
+                    <td><code>/var/log/apache2/</code></td>
+                    <td>root:adm</td>
+                    <td>755</td>
+                    <td>Logs de Apache</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h2>🔄 Servicios y Puertos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Puerto</th>
+                    <th>Protocolo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apache (HTTP)</td>
+                    <td>80</td>
+                    <td>TCP</td>
+                    <td>Activo y habilitado</td>
+                </tr>
+                <tr>
+                    <td>Apache (HTTPS)</td>
+                    <td>443</td>
+                    <td>TCP</td>
+                    <td>Opcional</td>
+                </tr>
+                <tr>
+                    <td>MySQL/MariaDB</td>
+                    <td>3306</td>
+                    <td>TCP</td>
+                    <td>Activo (solo localhost)</td>
+                </tr>
+                <tr>
+                    <td>DNS (bind9)</td>
+                    <td>53</td>
+                    <td>TCP/UDP</td>
+                    <td>Activo y habilitado</td>
+                </tr>
+                <tr>
+                    <td>SSH</td>
+                    <td>22</td>
+                    <td>TCP</td>
+                    <td>Activo</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h2>✅ Checklist de Verificación</h2>
+
+        <div class="section-box">
+            <h3>Apache</h3>
+            <pre><code>sudo systemctl status apache2
+sudo apache2ctl configtest
+sudo apache2ctl -S
+ls -la /etc/apache2/sites-enabled/</code></pre>
+
+            <h3>MySQL/MariaDB</h3>
+            <pre><code>sudo systemctl status mysql
+sudo mysql -e "SHOW DATABASES;"
+sudo mysql -e "USE wordpress_db; SHOW TABLES;"</code></pre>
+
+            <h3>DNS (bind9)</h3>
+            <pre><code>sudo systemctl status named
+sudo named-checkzone tas2025.local /etc/bind/zones/db.tas2025.local
+nslookup www.tas2025.local localhost
+dig @localhost www.tas2025.local</code></pre>
+
+            <h3>Permisos WordPress</h3>
+            <pre><code>ls -la /sitios/wp-tas2025/
+ls -ld /sitios/wp-tas2025/
+ls -la /sitios/wp-tas2025/wp-content/</code></pre>
+
+            <h3>Red</h3>
+            <pre><code>ip a
+cat /etc/resolv.conf
+cat /etc/hosts
+sudo netplan get</code></pre>
+        </div>
+
+        <div class="warning">
+            <strong>Recordatorio de Seguridad:</strong><br>
+            • Nunca compartir credenciales de bases de datos<br>
+            • Mantener WordPress actualizado<br>
+            • Usar HTTPS en producción<br>
+            • Configurar firewall (ufw)<br>
+            • Revisar logs regularmente
+        </div>
+
+        <div class="nav-buttons" style="margin-top: 30px;">
+            <a href="index.html" class="btn btn-home">🏠 Volver al Inicio</a>
+            <a href="comandos_certamen_resumen.html" class="btn">📋 Ver Comandos</a>
+        </div>
+
+        <hr>
+
+        <footer style="text-align: center; color: #7f8c8d; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+            <p><strong>Estructura de Archivos - Servidor Ubuntu TAS</strong></p>
+            <p>Guía de referencia completa para la configuración del servidor</p>
+            <p style="font-size: 0.9em;">Noviembre 2025</p>
+        </footer>
+    </div>
+</body>
+</html>
